@@ -19,15 +19,15 @@ set_vhost () {
     sed -i -e 's/{% NGINX_PROXY %}/${proxy}/g' /etc/nginx/conf.d/${name}.conf
     sed -i -e 's/{% NGINX_KEY %}/${key_name}/g' /etc/nginx/conf.d/${name}.conf
     sed -i -e 's/{% NGINX_PEM %}/${pem_name}/g' /etc/nginx/conf.d/${name}.conf
-    echo "$listen"
+    echo "$name"
 }
 # TODO: write pem and key files
 write_ssl () {
 
 }
 for value in $proxy_envs; do
-    listen=$(set_vhost $value)
-    echo "listen: $listen"
+    name=$(set_vhost $value)
+    echo "name: $name"
 done
 echo "-- starting nginx"
 exec 2>&1 /usr/sbin/nginx -c /etc/nginx/nginx.conf
