@@ -10,11 +10,11 @@ Suffix PROXY_ with the server name to listen to. Value should be set to where yo
 
 For https://stongo.com to proxy to http://someother.com `PROXY_STONGO_COM=someother.com`
 
-### PROXY_SERVER_NAME_SSLKEY=mysslkey
+### `PROXY_SERVER_NAME_SSLKEY=mysslkey`
 
 SSL key used for SSL termination
 
-### PROXY_SERVER_NAME_SSLPEM=mysslpem
+### `PROXY_SERVER_NAME_SSLPEM=mysslpem`
 
 SSL pem used for SSL termination
 
