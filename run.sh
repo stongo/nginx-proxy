@@ -20,7 +20,6 @@ set_vhost () {
         sed -i -e 's/{% NGINX_PROXY %}/${proxy}/g' /etc/nginx/conf.d/${name}.conf
         sed -i -e 's/{% NGINX_KEY %}/${key_name}/g' /etc/nginx/conf.d/${name}.conf
         sed -i -e 's/{% NGINX_PEM %}/${pem_name}/g' /etc/nginx/conf.d/${name}.conf
-        echo "$name"
     fi
 }
 write_ssl () {
@@ -32,17 +31,18 @@ write_ssl () {
     if [[ $var == *"_SSLPEM"* ]]; then
         echo "-- writing ssl pem for $name"
         pem=${arr[1]}
-        echo "$pem" | tee /etc/nginx/ssl-keys/${name}.pem
+        echo "$pem" > /etc/nginx/ssl-keys/${name}.pem
     fi
     if [[ $var == *"_SSLKEY"* ]]; then
         echo "-- writing ssl key for $name"
         key=${arr[1]}
-        echo "$key" | tee /etc/nginx/ssl-keys/${name}.key
+        echo "$key" > /etc/nginx/ssl-keys/${name}.key
     fi
 }
-for value in $proxy_envs; do
-    vhost=$(set_vhost $value)
-    ssl=$(write_ssl $value)
+# TODO figure out how to iterate when environment variable values have line breaks
+for value in $prox_envs; do
+    set_vhost $value
+    write_ssl $value
 done
 echo "-- starting nginx"
 exec 2>&1 /usr/sbin/nginx -c /etc/nginx/nginx.conf
