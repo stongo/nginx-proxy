@@ -1,21 +1,13 @@
 #
 # Nginx Proxy
 #
-FROM debian:jessie
+FROM alpine:edge
 
 MAINTAINER Marcus Stong, marcus@andyet.net
 
-EXPOSE 80 443
+EXPOSE 80
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ABF5BD827BD9BF62 && \
-    echo "deb http://www.nginx.org/packages/debian/ jessie nginx" > /etc/apt/sources.list.d/nginx.list && \
-    apt-get update && \
-    apt-get install -y nginx && \
-    apt-get clean && \
-    mkdir -p /etc/talky-client; \
-    touch /etc/talky-client/config.js; \
+RUN apk --update add nodejs build-base nginx bash; \
     mkdir /src; \
     mkdir -p /etc/nginx/ssl-keys
 
