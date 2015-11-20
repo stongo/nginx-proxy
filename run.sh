@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "-- create vhost files"
 proxy_envs=$(printenv | grep '^PROXY')
-if [ -z $proxy_envs ]; then
+if [ -z "$proxy_envs" ]; then
     echo "ERROR: No Proxy Settings detected"
     echo "Please set environment variables with pattern PROXY_DOMAIN_COM, PROXY_DOMAIN_COM_PEM, PROXY_DOMAIN_COM_KEY"
     exit 1
