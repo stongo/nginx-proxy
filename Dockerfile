@@ -7,9 +7,8 @@ MAINTAINER Marcus Stong, marcus@andyet.net
 
 EXPOSE 80
 
-RUN apk --update add nodejs build-base nginx bash; \
-    mkdir /src; \
-    mkdir -p /etc/nginx/ssl-keys
+RUN apk --update add nginx bash && \
+    mkdir /src
 
 ADD nginx.conf /etc/nginx/nginx.conf
 ADD vhost.conf /src
