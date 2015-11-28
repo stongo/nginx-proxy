@@ -6,6 +6,7 @@ if [ -z "$proxy_envs" ]; then
     echo "Please set environment variables with pattern PROXY_DOMAIN_COM=target.com"
     exit 1
 fi
+: ${NGINX_RESOLVER:=8.8.8.8}
 set_vhost () {
     var=$1
     arr=(${var//=/ })
@@ -15,6 +16,7 @@ set_vhost () {
     cp /src/vhost.conf /etc/nginx/conf.d/${name}.conf
     sed -i -e "s/{% NGINX_SERVER_NAME %}/$name/g" /etc/nginx/conf.d/${name}.conf
     sed -i -e "s/{% NGINX_PROXY %}/$proxy/g" /etc/nginx/conf.d/${name}.conf
+    sed -i -e "s/{% NGINX_RESOLVER %}/$NGINX_RESOLVER/g" /etc/nginx/conf.d/${name}.conf
 }
 for value in $proxy_envs; do
     set_vhost $value
